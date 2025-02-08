@@ -218,29 +218,18 @@ export class Slider extends PureComponent<SliderProps, SliderState> {
             // @ts-ignore
             const newValues = normalizeValue(this.props, this.props.value);
 
-            // eslint-disable-next-line react/no-did-update-set-state
-            this.setState(
-                {
-                    values: updateValues({
-                        values: this.state.values,
-                        newValues: newValues,
-                    }),
-                },
-                () => {
-                    newValues.forEach((value, i) => {
-                        // @ts-ignore
-                        const currentValue = this.state.values[i].__getValue();
-                        if (
-                            value !== currentValue &&
-                            this.props.animateTransitions
-                        ) {
-                            this._setCurrentValueAnimated(value, i);
-                        } else {
-                            this._setCurrentValue(value, i);
-                        }
-                    });
-                },
-            );
+            newValues.forEach((value, i) => {
+                // @ts-ignore
+                const currentValue = this.state.values[i].__getValue();
+                if (
+                    value !== currentValue &&
+                    this.props.animateTransitions
+                ) {
+                    this._setCurrentValueAnimated(value, i);
+                } else {
+                    this._setCurrentValue(value, i);
+                }
+            });
         }
 
         // Check for other prop changes that might require state updates, e.g., trackMarks
